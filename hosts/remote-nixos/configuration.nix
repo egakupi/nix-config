@@ -31,13 +31,24 @@
 
   # Enable the OpenSSH daemon.
   services.openssh = {
-  enable = true;
-  settings = {
+    enable = true;
+    settings = {
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
     };
   };
 
-  system.stateVersion = "24.11"; 
+  # Enable Ollama service
+  services.ollama = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 11434;
+    loadModels = [ "cas/nous-hermes-2-mistral-7b-dpo:latest" ];
+  };
+
+  # Open port for Ollama
+  networking.firewall.allowedTCPPorts = [ 11434 ];
+
+  system.stateVersion = "24.11";
 }
 
